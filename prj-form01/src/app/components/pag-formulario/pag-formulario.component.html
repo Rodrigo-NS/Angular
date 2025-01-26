@@ -1,0 +1,28 @@
+<div class="formulario">
+    <mat-form-field>
+        <mat-label>CNPJ</mat-label>
+        <input matInput id="cnpj" name="cnpj" placeholder="Digite o CNPJ" (focusout)="validCNPJInput()">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput id="name" name="name" [(ngModel)]="name" placeholder="Digite o nome da empresa">
+    </mat-form-field>
+
+    <!--
+    <input type="text" [value]="name">
+    -->
+
+    <mat-form-field>
+        <mat-label>eMail</mat-label>
+        <input matInput id="email" name="email" placeholder="Digite o e-mail">
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <div class="button-row">
+        <button mat-flat-button color="primary" class="custom-button" (click)="clickedOnConfirm()">Confirmar</button>
+        <button mat-flat-button color="warn" class="custom-button" (click)="clickedOnClear()">Cancelar</button>
+    </div>
+
+</div>

@@ -1,0 +1,51 @@
+<section class="property-bliding">
+    <article>
+      <h3>Interpolação - Rodrigo</h3>
+      <p>String renderizada com Interpolação {{ url }}</p>
+      <p>Idade: {{ 40 - getIdade()  }}</p>
+      <p>Gosta do curso? {{ cursoAngular ? 'Sim' : 'Não' }}</p>
+    </article>
+        <!--
+    <article>
+    
+        <h3>Property Bliding</h3>
+        <button [disabled]="isDisabled">Botão</button>
+        <p></p>
+        
+        <img style="width: 800px; height: 500px;" src="{{ urlImagem }}">
+        <p></p>
+        <img style="width: 800px; height: 500px;" [src]="urlImagem">
+   
+    </article>
+    <article>
+        <h3>Class e Style Binding</h3>
+        <div>
+            Selecione uma classe:
+            <select #classe (change)="0">
+                <option value="alert-success">Sucesso</option>
+                <option value="alert-info">Info</option>
+                <option value="alert-warning">Alerta</option>
+                <option value="alert-danger">Erro</option>
+            </select>
+            <br><br>
+            <div class="alert "[class.alert-success]="classe.value == 'alert-success'" role="alert">Sucesso</div>
+            <div class="alert "[class.alert-info]="classe.value == 'alert-info'" role="alert">Info</div>
+            <div class="alert "[class.alert-warning]="classe.value == 'alert-warning'" role="alert">Alerta</div>
+            <div class="alert "[class.alert-danger]="classe.value == 'alert-danger'" role="alert">Erro</div>
+        </div>
+    </article>
+         -->
+    <h3>Event binding</h3>
+    <button (click)="botaoClicado()" class="btn btn-primary">
+        Me clique!
+    </button>
+    <br><br>
+    <span 
+    (mouseover)="onMouseOverOut()"
+    (mouseout)="onMouseOverOut()"
+    [class.highlinght]="isMouseOver"
+    >
+    Passe o mouse sobre mim 
+        
+    </span>
+  </section>

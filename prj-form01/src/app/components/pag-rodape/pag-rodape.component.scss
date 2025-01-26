@@ -1,0 +1,25 @@
+/* centralizar os objetos */
+div {
+    text-align: center;
+}
+
+/* definir altura dos ícones e cor padrão */
+svg {
+    height: 30px;
+    fill: grey;
+}
+
+/* definir o texto padrão */
+a, a:visited, small {
+    color: grey;
+}
+
+/* ao passar o mouse no link, ficar vermelho */
+a:hover {
+    color: red;
+}
+
+/* ao passar o mouse nos ícones, deixar vermelho */
+a:hover > svg {
+    fill: red;
+}

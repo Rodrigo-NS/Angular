@@ -1,0 +1,32 @@
+/* centraliza o formulário */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+    padding-bottom: 10px;
+}
+
+/* definindo as exibições dos botões lado a lado */
+.button-row {
+    display: table-cell;
+    max-width: 600px;
+}
+
+/* definindo espaço entre os botões */
+button {
+    margin-right: 05px;
+}
+
+/* configurando a linha divisória */
+.mat-divider {
+    padding: 5px;
+    width: 200px;
+    display: none;
+}
+
+.custom-button {
+    border-radius: 5px; /* Ajuste este valor conforme a curvatura desejada */
+    width: 100px;
+  }
