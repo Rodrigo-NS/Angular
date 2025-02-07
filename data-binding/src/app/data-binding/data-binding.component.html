@@ -1,11 +1,11 @@
 <section class="property-bliding">
     <article>
-      <h3>Interpolação - Rodrigo</h3>
-      <p>String renderizada com Interpolação {{ url }}</p>
-      <p>Idade: {{ 40 - getIdade()  }}</p>
-      <p>Gosta do curso? {{ cursoAngular ? 'Sim' : 'Não' }}</p>
+        <h3>Interpolação - Rodrigo</h3>
+        <p>String renderizada com Interpolação {{ url }}</p>
+        <p>Idade: {{ 40 - getIdade() }}</p>
+        <p>Gosta do curso? {{ cursoAngular ? 'Sim' : 'Não' }}</p>
     </article>
-        <!--
+    <!--
     <article>
     
         <h3>Property Bliding</h3>
@@ -40,12 +40,15 @@
         Me clique!
     </button>
     <br><br>
-    <span 
-    (mouseover)="onMouseOverOut()"
-    (mouseout)="onMouseOverOut()"
-    [class.highlinght]="isMouseOver"
-    >
-    Passe o mouse sobre mim 
-        
+    <span (mouseover)="onMouseOverOut()" (mouseout)="onMouseOverOut()" [class.highlinght]="isMouseOver">
+        Passe o mouse sobre mim
     </span>
-  </section>
+
+    <article>
+        <br><br>
+        <h3>Input/Output Properties</h3>
+        <app-curso [nome]="nomeCurso"></app-curso>
+        <contador [valor]="valorInicial" (mudouValor)="onMudouValor($event)"></contador>
+
+    </article>
+</section>

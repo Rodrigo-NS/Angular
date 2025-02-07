@@ -4,8 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { ShippingCompany } from '../../ShippingCompany';
-import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'; 
 import { Buffer } from "buffer";
 
 import { MatSnackBarModule } from '@angular/material/snack-bar'
@@ -31,11 +30,21 @@ export class PagFormularioComponent implements OnInit {
   private lastTime: number = new Date().getTime();
   name: string = '';
 
+  /*
+  constructor() => o método é uma função especial que é automaticamente chamada quando uma instância de uma classe
+  é criada. Ele é comumente utilizado para injeção de dependências, permitindo que serviços sejam disponibilizados 
+  para o componente. No entanto, o constructor() não faz parte do ciclo de vida dos componentes do Angular. 
+  */
   constructor(
     private http: HttpClient,
     private snackbar: MatSnackBar
   ) {}
 
+  /* 
+  ngOnInit() => método do ciclo de vida dos componentes que é executado uma única vez, logo após o Angular 
+  inicializar  todas as propriedades de entrada do componente. É comumente utilizado para realizar tarefas 
+  de inicialização, como buscar dados de uma API ou configurar valores iniciais.
+  */
   ngOnInit() {
      this.generateToken();
   }
@@ -113,45 +122,56 @@ export class PagFormularioComponent implements OnInit {
   }
 
   // Método chamado ao clicar no botão Confirmar
-  clickedOnConfirm() {
-    const cnpjValue = (document.getElementById('cnpj') as HTMLInputElement).value;
-    const nameValue = (document.getElementById('name') as HTMLInputElement).value;
-    const emailValue = (document.getElementById('email') as HTMLInputElement).value;
+  // Método chamado ao clicar no botão Confirmar
+clickedOnConfirm() {
+  const cnpjValue = (document.getElementById('cnpj') as HTMLInputElement).value;
+  const nameValue = (document.getElementById('name') as HTMLInputElement).value;
+  const emailValue = (document.getElementById('email') as HTMLInputElement).value;
 
-    // Gera o token de autenticação, se necessário
-    this.generateToken();
+  // Gera o token de autenticação, se necessário
+  this.generateToken();
 
-    // Monta os cabeçalhos da requisição
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.bearerToken}`
-      })
-    };
+  // Monta os cabeçalhos da requisição
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.bearerToken}`
+    })
+  };
 
-    // Monta os parâmetros do corpo da requisição
-    const httpBody = {
-      cgc: cnpjValue,
-      nome: nameValue,
-      email: emailValue
-    };
+  // Monta os parâmetros do corpo da requisição
+  const httpBody = {
+    cgc: cnpjValue,
+    nome: nameValue,
+    email: emailValue
+  };
 
-    // Realiza um POST no Protheus para atualizar as informações da Transportadora
-    const url = `${this.endServer}/rest/zWsTransport/new`;
-    this.http.post<any>(url, httpBody, httpOptions).subscribe({
-      next: () => {
-        this.clickedOnClear();
-      },
-      error: (e) => {
-        console.error(`Falha na gravação da Transportadora: ${e.status} - ${e.statusText}`);
-        this.snackbar.open('Falha na gravação da Transportadora, contate o Administrador (fecha em 3s)', 'Fechar', { duration: 3000 });
-      },
-      complete: () => {
-        console.log('Gravação da Transportadora Completa');
-        this.snackbar.open('Transportadora gravada com sucesso (fecha em 3s)', 'Fechar', { duration: 3000 });
+  // Realiza um POST no Protheus para atualizar as informações da Transportadora
+  const url = `${this.endServer}/rest/zWsTransport/new`;
+
+  this.http.post<any>(url, httpBody, httpOptions).subscribe({
+    next: () => {
+      this.clickedOnClear();
+      this.snackbar.open('Transportadora gravada com sucesso (fecha em 3s)', 'Fechar', { duration: 3000 });
+    },
+    error: (error: HttpErrorResponse) => {
+      console.error(`Falha na gravação da Transportadora: ${error.status} - ${error.statusText}`);
+      if (error.error instanceof ErrorEvent) {
+        // Erro do lado do cliente ou de rede
+        console.error('Ocorreu um erro:', error.error.message);
+        this.snackbar.open(`Erro: ${error.error.message}`, 'Fechar', { duration: 3000 });
+      } else {
+        // Erro retornado pelo backend
+        console.error(`Código do erro: ${error.status}, corpo: ${JSON.stringify(error.error)}`);
+        this.snackbar.open(`Erro: ${error.error.error} - ${error.error.solution}`, 'Fechar', { duration: 3000 });
       }
-    });
-  }
+    },
+    complete: () => {
+      console.log('Gravação da Transportadora Completa');
+    }
+  });
+}
+
 
   // Método chamado ao clicar no botão Limpar
   clickedOnClear() {
