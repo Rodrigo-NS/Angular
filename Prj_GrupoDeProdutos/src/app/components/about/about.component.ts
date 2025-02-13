@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 
 import {
   PoLinkModule,
-  PoInfoModule
+  PoInfoModule,
+  PoIconModule
 } from '@po-ui/ng-components';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [PoLinkModule, PoInfoModule],
+  imports: [PoLinkModule, PoInfoModule, PoIconModule],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })
